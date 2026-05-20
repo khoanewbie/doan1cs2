@@ -12,8 +12,8 @@ import socket
 # ==========================================
 # 0. CẤU HÌNH ĐƯỜNG DẪN TỚI FILE CỦA BẠN
 # ==========================================
-IMAGE_PATH = r"C:\Users\DANG KHOA\OneDrive\Máy tính\map cs2.png"
-MODEL_PATH = r"C:\Users\DANG KHOA\Downloads\best (6).pt"
+IMAGE_PATH = "map cs2.png"
+MODEL_PATH = "best (6).pt"
 
 @st.cache_resource
 def load_yolo_model():
