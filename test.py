@@ -187,7 +187,7 @@ img_qr = qr.make_image(fill_color="black", back_color="white").get_image()
 
 st.sidebar.markdown("### 📱 Truy cập trên điện thoại")
 st.sidebar.image(img_qr, caption=f"Link: {url}")
-st.sidebar.info("💡 Lưu ý: Điện thoại và máy tính phải bắt chung mạng Wi-Fi thì mới quét được.")
+st.sidebar.success("✅ Có thể quét bằng bất kỳ mạng 4G/Wi-Fi nào!")
 
 st.title("🗺️ HỆ THỐNG NHẬN DIỆN VÀ CHỈ ĐƯỜNG")
 
