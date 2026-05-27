@@ -161,19 +161,10 @@ danh_sach_toa_nha = [
 # ==========================================
 st.set_page_config(page_title="Hệ Thống Chỉ Đường Thông Minh", layout="wide")
 
-def get_local_ip():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        s.connect(('10.255.255.255', 1))
-        IP = s.getsockname()[0]
-    except Exception:
-        IP = '127.0.0.1'
-    finally:
-        s.close()
-    return IP
+# --- PHẦN TẠO MÃ QR ĐÃ ĐƯỢC CHUẨN HÓA SỬA LỖI ---
+import io  # Đảm bảo đã import thư viện io xử lý bộ nhớ đệm
 
-local_ip = get_local_ip()
-url = f"http://{local_ip}:8501"
+url = "https://doan1cs2-khoanewbie.streamlit.app/" 
 
 qr = qrcode.QRCode(
     version=1,
@@ -183,16 +174,23 @@ qr = qrcode.QRCode(
 )
 qr.add_data(url)
 qr.make(fit=True)
-img_qr = qr.make_image(fill_color="black", back_color="white").get_image()
 
+# Tạo ảnh từ thư viện qrcode
+img_qr_raw = qr.make_image(fill_color="black", back_color="white")
+
+# CHUYỂN ĐỔI: Biến đổi ảnh của qrcode thành dữ liệu bytes chuẩn PNG để Streamlit đọc được
+buf = io.BytesIO()
+img_qr_raw.save(buf, format="PNG")
+qr_bytes = buf.getvalue()
+
+# Hiển thị dữ liệu bytes lên thanh bên
 st.sidebar.markdown("### 📱 Truy cập trên điện thoại")
-st.sidebar.image(img_qr, caption=f"Link: {url}")
+st.sidebar.image(qr_bytes, caption=f"Link: {url}")
 st.sidebar.success("✅ Có thể quét bằng bất kỳ mạng 4G/Wi-Fi nào!")
+# ---------------------------------------------
 
 st.title("🗺️ HỆ THỐNG NHẬN DIỆN VÀ CHỈ ĐƯỜNG")
-
-diem_xuat_phat_ai = None 
-
+diem_xuat_phat_ai = None
 # -- PHẦN 1: TẢI ẢNH VÀ NHẬN DIỆN BẰNG YOLO --
 st.subheader("📸 1. Chụp/Tải ảnh tòa nhà bạn đang đứng")
 uploaded_file = st.file_uploader("Tải ảnh lên để AI nhận diện vị trí...", type=["jpg", "jpeg", "png"])
