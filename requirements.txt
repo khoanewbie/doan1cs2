@@ -1,7 +1,5 @@
 streamlit
-opencv-python-headless
-networkx
-numpy
 ultralytics
-Pillow
+numpy
 qrcode
+opencv-python-headless
